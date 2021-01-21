@@ -17,7 +17,7 @@ setInterval(() => jpyExRateTemp = 0, t);
 const getJapanExRate = () => new Promise((resolve, reject) => {
 
     request({
-        url: 'http://rate.bot.com.tw/Pages/Static/UIP003.zh-TW.htm',
+        url: rateUrl,
         method: 'GET'
     }, (error, response, body) => {
 
