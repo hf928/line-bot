@@ -12,7 +12,7 @@ module.exports = (bot) => {
         clearTimeout(timer);
 
         request({
-            url: 'http://rate.bot.com.tw/Pages/Static/UIP003.zh-TW.htm',
+            url: 'https://rate.bot.com.tw/xrt?Lang=zh-TW',
             method: 'GET'
         }, (error, response, body) => {
 
