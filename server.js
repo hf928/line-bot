@@ -12,6 +12,7 @@ const bot = linebot({
 
 const Reply_JPYExchangeRate = require('./messages/Reply_JPYExchangeRate');
 Reply_JPYExchangeRate(bot);
+// 停用
 // const JPYExchangeRate = require('./pushs/JPYExchangeRate');
 // JPYExchangeRate(bot);
 
