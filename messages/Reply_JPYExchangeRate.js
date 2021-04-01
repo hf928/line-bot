@@ -59,6 +59,7 @@ const replyExRate = async (reply) => {
     
     // 回應訊息
     reply(`日幣匯率 ${jpyExRateTemp}
+
 ${rateUrl}`);
 
 }
@@ -80,6 +81,9 @@ const replyExchange = async (amount, reply) => {
     // 回應訊息
     reply(`🇯🇵 ${amount} = 🇹🇼 ${(amount * +jpyExRateTemp).toFixed(0)}
 🇹🇼 ${amount} = 🇯🇵 ${(amount / +jpyExRateTemp).toFixed(2)}
+
+日幣匯率 ${jpyExRateTemp}
+
 ${rateUrl}`);
 
 }
