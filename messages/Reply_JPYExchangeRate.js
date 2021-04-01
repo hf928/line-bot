@@ -41,7 +41,49 @@ const getJapanExRate = () => new Promise((resolve, reject) => {
     });
 
 });
-  
+
+
+const replyExRate = async (reply) => {
+
+
+    // 檢查是否有暫存匯率, 沒有就去爬
+    if (jpyExRateTemp === 0) {
+
+        // 爬匯率
+        const jpyExRate = await getJapanExRate();
+
+        // 暫存匯率以供下次使用
+        jpyExRateTemp = jpyExRate;
+
+    }
+    
+    // 回應訊息
+    reply(`日幣匯率 ${jpyExRateTemp}
+${rateUrl}`);
+
+}
+
+const replyExchange = async (amount, reply) => {
+
+
+    // 檢查是否有暫存匯率, 沒有就去爬
+    if (jpyExRateTemp === 0) {
+
+        // 爬匯率
+        const jpyExRate = await getJapanExRate();
+
+        // 暫存匯率以供下次使用
+        jpyExRateTemp = jpyExRate;
+
+    }
+    
+    // 回應訊息
+    reply(`🇯🇵 ${amount} = 🇹🇼 ${(amount * +jpyExRateTemp).toFixed(0)}
+🇹🇼 ${amount} = 🇯🇵 ${(amount / +jpyExRateTemp).toFixed(2)}
+${rateUrl}`);
+
+}
+
 module.exports = (bot) => {
 
     bot.on('message', async (evt) => {
@@ -50,31 +92,22 @@ module.exports = (bot) => {
         if (evt.message.type === 'text') {
 
             const msg = evt.message.text;
-    
+
+            if (msg === '') return;
+
             // 文字包含關鍵字: '匯率'
             if (msg.indexOf('匯率') !== -1) {
 
-                let replyMsg = '';
-
-                // 檢查是否有暫存匯率, 沒有就去爬
-                if (jpyExRateTemp === 0) {
-
-                    // 爬匯率
-                    const jpyExRate = await getJapanExRate();
-
-                    // 暫存匯率以供下次使用
-                    jpyExRateTemp = jpyExRate;
-
-                }
-
-                
-                replyMsg = `日幣匯率 ${jpyExRateTemp}
-${rateUrl}`;
-
-                // 回應訊息
-                evt.reply(replyMsg);
+                await replyExRate(evt.reply);
 
             }
+            // 若為數字則換算
+            else if (Number.isNaN(+msg) === false) {
+
+                await replyExchange(+msg, evt.reply);
+
+            }
+
             
         }
     
